@@ -1,33 +1,33 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type='text/javascript'>
-//<![CDATA[
- 
-// RSS feed option examples 
-// https://ourmooseinabox.blogspot.com/feeds/posts/default/-/sabbatical?start-index=10&max-results=10
-// ?alt=rss
-// ?start-index=1
-// ?max-results=10
-// ?q=australia
-// ?q=craft%20beer     phrase?
-// ?q=australia+cats    two search terms?
-// ?published-min=2014-12-01T00:00:00 (published-min, published-max, updated-min, updated-max)
-// /-/sabbatical   = Label
-// /-/label1/label2  = 2 Labels
+  //<![CDATA[
 
-function subDisplay(name) { 
-   $("#"+name).show();
-}
+  // RSS feed option examples 
+  // https://ourmooseinabox.blogspot.com/feeds/posts/default/-/sabbatical?start-index=10&max-results=10
+  // ?alt=rss
+  // ?start-index=1
+  // ?max-results=10
+  // ?q=australia
+  // ?q=craft%20beer     phrase?
+  // ?q=australia+cats    two search terms?
+  // ?published-min=2014-12-01T00:00:00 (published-min, published-max, updated-min, updated-max)
+  // /-/sabbatical   = Label
+  // /-/label1/label2  = 2 Labels
 
-function hideAll() {
-   $("#AllMyImages").children().hide(); 
-}
+  function subDisplay(name) {
+    $("#" + name).show();
+  }
 
-//----------------------------
+  function hideAll() {
+    $("#AllMyImages").children().hide();
+  }
 
-var myUrl = "http://ourmooseinabox.blogspot.com/feeds/posts/default";
-var allBlogData = [];
-var imageCount = 0;
-var rssIndex = 1;
+  //----------------------------
+
+  var myUrl = "http://ourmooseinabox.blogspot.com/feeds/posts/default";
+  var allBlogData = [];
+  var imageCount = 0;
+  var rssIndex = 1;
 
   function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
