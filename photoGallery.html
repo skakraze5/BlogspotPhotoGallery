@@ -67,23 +67,6 @@ function printBlogData(sortOrder)
   var debug = "true";
 }
 
-function getLink(entryData)
-{
-  var links = $(entryData).find("link");
-  var linkurl = "";
-  links.each(function() {
-    var linkData = $(this);
-    var linkrel = linkData.attr("rel");
-    if( linkrel == "alternate" )
-    {
-      linkurl = linkData.attr("href");
-      return;
-    }
-  });
-
-  return linkurl;
-}
-
 function getCaption(imageNode)
 {
   var parentNode = imageNode.parent();
@@ -121,46 +104,6 @@ function processHTML(html)
      });
    }
    return myImageArray;
-}
-
-function processURL(rssData) 
-{
-  var entries = $(rssData).find("entry");
-  entries.each(function () { 
-    var entryData = $(this);
-    var entryArray = [];
-    entryArray["postTitle"] = $(entryData).find("title").text();
-    entryArray["postURL"] = getLink(entryData);
-
-    var images = [];
-    var content = $(entryData).find("content").text();
-    var html = $.parseHTML(content);
-    var imgs = $(html).find("img");
-    if (imgs.length > 0) {
-      imgs.each(function() {
-        var im = $(this);
-        var src = im.attr("src");
-        var caption = getCaption(im);
-        var imageData = [];
-        imageData["imageURL"] = src;
-        imageData["imageCaption"] = caption;
-        images.push(imageData);
-        imageCount++;
-      });
-    }
-    entryArray["imageArray"] = images;
-    allBlogData.push(entryArray);
-  });
-
-  if(entries.length > 0)
-  {
-    rssIndex = rssIndex + entries.length;
-    loadImageDataWithIndex();
-  }
-  else
-  {
-    console.log("entries: " +rssIndex);
-  }
 }
 
 function cat(json){ 
@@ -202,24 +145,10 @@ function getImagesFromJSON(json) {
   }
 }
 
-function loadImageDataWithIndex()
-{
-  var thisUrl = myUrl + "?start-index=" + rssIndex ;
-  $.get(thisUrl, processURL);
-}
-
 function loadImageDataWithIndexWithJSON()
 {
   var thisUrl = myUrl + "?start-index=" + rssIndex + "&alt=json";
   $.get(thisUrl, getImagesFromJSON);
-}
-
-function loadImageData()
-{
-  allBlogData = [];
-  imageCount = 0;
-  rssIndex = 1;
-  loadImageDataWithIndex();
 }
 
 function loadImageDataWithJson()
