@@ -102,35 +102,32 @@ var rssIndex = 1;
     }
   }
 
-function getImagesFromJSON(json) {
-  var entries = json.feed.entry;
-  if( entries == null )
-  {
-    console.log("entries: " + rssIndex);
-    printBlogData("olderFirst");
-    return;
+  function getImagesFromJSON(json) {
+    var entries = json.feed.entry;
+    if (entries == null) {
+      console.log("entries: " + rssIndex);
+      printBlogData("olderFirst");
+      return;
+    }
+    for (i = 0; i < entries.length; i++) {
+      var entry = entries[i];
+      var myEntryArray = [];
+      myEntryArray["postTitle"] = entry.title.$t;
+      myEntryArray["postURL"] = entry.link.filter(function(a) {
+        return a.rel == 'alternate'
+      })[0].href;
+      var content = entry.content.$t;
+      myEntryArray["imageArray"] = processHTML(content);
+      allBlogData.push(myEntryArray);
+    }
+    if (entries.length > 0) {
+      rssIndex = rssIndex + entries.length;
+      return loadImageDataWithIndexWithJSON();
+    } else {
+      console.log("entries: " + rssIndex);
+      return;
+    }
   }
-
-  for (i = 0; i < entries.length; i++) 
-  {
-    var entry = entries[i];
-    var myEntryArray = [];
-    myEntryArray["postTitle"] = entry.title.$t;
-    myEntryArray["postURL"] = entry.link.filter(function(a) { return a.rel == 'alternate'})[0].href;
-    var content = entry.content.$t;
-    myEntryArray["imageArray"] = processHTML(content);
-    allBlogData.push(myEntryArray);
-  }
-
-  if (entries.length > 0) 
-  {
-    rssIndex = rssIndex + entries.length;
-    return loadImageDataWithIndexWithJSON();
-  } else {
-    console.log("entries: " + rssIndex);
-    return;
-  }
-}
 
 function loadImageDataWithIndexWithJSON()
 {
