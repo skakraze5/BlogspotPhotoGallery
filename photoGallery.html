@@ -129,19 +129,17 @@ var rssIndex = 1;
     }
   }
 
-function loadImageDataWithIndexWithJSON()
-{
-  var thisUrl = myUrl + "?start-index=" + rssIndex + "&alt=json";
-  $.get(thisUrl, getImagesFromJSON);
-}
+  function loadImageDataWithIndexWithJSON() {
+    var thisUrl = myUrl + "?start-index=" + rssIndex + "&alt=json";
+    $.get(thisUrl, getImagesFromJSON);
+  }
 
-function loadImageDataWithJson()
-{
-  allBlogData = [];
-  imageCount = 0;
-  rssIndex = 1;
-  loadImageDataWithIndexWithJSON();
-}
+  function loadImageDataWithJson() {
+    allBlogData = [];
+    imageCount = 0;
+    rssIndex = 1;
+    loadImageDataWithIndexWithJSON();
+  }
 
 
 
