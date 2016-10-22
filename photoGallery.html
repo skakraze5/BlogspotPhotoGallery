@@ -14,23 +14,6 @@
 // /-/sabbatical   = Label
 // /-/label1/label2  = 2 Labels
 
-function print(divname)
-{
- console.log("-------------" + images.length);
- var myDiv = document.getElementById(divname);
- for( var i = 0; i < images.length; i++)
- {
-   console.log(images[i]);
-   var elem = document.createElement("img");
-   elem.setAttribute("src", images[i]);
-   elem.setAttribute("width", "100");
-   //elem.setAttribute("width", "1024");
-   //elem.setAttribute("alt", "Flower");
-   elem.setAttribute("class", "ImageForGallery");
-   myDiv.appendChild(elem);
- }
-}
-
 function subDisplay(name) { 
    $("#"+name).show();
 }
