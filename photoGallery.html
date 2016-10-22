@@ -24,10 +24,10 @@
 
   //----------------------------
 
-  var myUrl = "http://ourmooseinabox.blogspot.com/feeds/posts/default";
-  var allBlogData = [];
-  var imageCount = 0;
-  var rssIndex = 1;
+  var g_baseURL = "http://ourmooseinabox.blogspot.com/feeds/posts/default";
+  var g_allBlogData = [];
+  var g_imageCount = 0;
+  var g_rssIndex = 1;
 
   function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
@@ -50,12 +50,12 @@
     }
 
     if (sortOrder == "olderFirst") {
-      for (var i = allBlogData.length - 1; i >= 200; i--) {
-        printEntry(allBlogData[i], myDiv);
+      for (var i = g_allBlogData.length - 1; i >= 200; i--) {
+        printEntry(g_allBlogData[i], myDiv);
       }
     } else {
-      for (var i = 0; i < allBlogData.length / 4; i++) {
-        printEntry(allBlogData[i], myDiv);
+      for (var i = 0; i < g_allBlogData.length / 4; i++) {
+        printEntry(g_allBlogData[i], myDiv);
       }
     }
 
@@ -88,7 +88,7 @@
         imageData["imageURL"] = src;
         imageData["imageCaption"] = caption;
         myImageArray.push(imageData);
-        imageCount++;
+        g_imageCount++;
       });
     }
     return myImageArray;
@@ -105,7 +105,7 @@
   function getImagesFromJSON(json) {
     var entries = json.feed.entry;
     if (entries == null) {
-      console.log("entries: " + rssIndex);
+      console.log("entries: " + g_rssIndex);
       printBlogData("olderFirst");
       return;
     }
@@ -118,26 +118,26 @@
       })[0].href;
       var content = entry.content.$t;
       myEntryArray["imageArray"] = processHTML(content);
-      allBlogData.push(myEntryArray);
+      g_allBlogData.push(myEntryArray);
     }
     if (entries.length > 0) {
-      rssIndex = rssIndex + entries.length;
+      g_rssIndex = g_rssIndex + entries.length;
       return loadImageDataWithIndexWithJSON();
     } else {
-      console.log("entries: " + rssIndex);
+      console.log("entries: " + g_rssIndex);
       return;
     }
   }
 
   function loadImageDataWithIndexWithJSON() {
-    var thisUrl = myUrl + "?start-index=" + rssIndex + "&alt=json";
+    var thisUrl = g_baseURL + "?start-index=" + g_rssIndex + "&alt=json";
     $.get(thisUrl, getImagesFromJSON);
   }
 
   function loadImageDataWithJson() {
-    allBlogData = [];
-    imageCount = 0;
-    rssIndex = 1;
+    g_allBlogData = [];
+    g_imageCount = 0;
+    g_rssIndex = 1;
     loadImageDataWithIndexWithJSON();
   }
 
