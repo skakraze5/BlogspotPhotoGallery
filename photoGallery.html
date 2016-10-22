@@ -32,6 +32,10 @@
   function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
     for (var j = 0; j < imageArray.length; j++) {
+      var linkElem = document.createElement("a");
+      linkElem.setAttribute("href",imageArray[j]["imageURL"]);
+      linkElem.setAttribute("imageanchor",1);
+      
       var elem = document.createElement("img");
       elem.setAttribute("src", imageArray[j]["imageURL"]);
       elem.setAttribute("width", "100");
@@ -39,7 +43,8 @@
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
       elem.setAttribute("class", "ImageForGallery");
-      myDiv.appendChild(elem);
+      linkElem.appendChild(elem);
+      myDiv.appendChild(linkElem);
     }
   }
 
