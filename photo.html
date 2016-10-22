@@ -1,0 +1,309 @@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type='text/javascript'>
+//<![CDATA[
+// https://ourmooseinabox.blogspot.com/feeds/posts/default/-/sabbatical?start-index=10&max-results=10
+// ?alt=rss
+// ?start-index=1
+// ?max-results=10
+// ?q=australia
+// ?q=craft%20beer     phrase?
+// ?q=australia+cats    two search terms?
+// ?published-min=2014-12-01T00:00:00 (published-min, published-max, updated-min, updated-max)
+// /-/sabbatical   = Label
+// /-/label1/label2  = 2 Labels
+
+//var images = [];
+//var i = 0;
+
+
+
+//console.log("myFunction ........");
+//subDisplay(divname);
+//images = [];
+//var myUrl = "http://ourmooseinabox.blogspot.com/feeds/posts/default?start-index="+startIndex+"&max-results="+ maxResults;
+//$.get(myUrl, function (data) {
+//    $(data).find("content").each(function () { 
+//        var el = $(this);
+//        //arr.push("TESTING");
+
+//        var content = el.text();
+        //var xmltxt = "<top>"+ content +"</top>";
+        //var xml = $.parseXML(xmltxt);
+//       var html = $.parseHTML(content);
+        //console.log(html); 
+//        var imgs = $(html).find("img");
+        //console.log(imgs);
+//        if(imgs.length > 0)
+//        {
+//            imgs.each(function () {
+//                var im = $(this);
+//                var src = im.attr("src");
+//                images.push(src);
+//                console.log(i);
+//            });
+//        }
+//
+//       
+//        
+//    });
+//   print(divname);
+//});
+//
+//}
+
+function print(divname)
+{
+ console.log("-------------" + images.length);
+ var myDiv = document.getElementById(divname);
+ for( var i = 0; i < images.length; i++)
+ {
+   console.log(images[i]);
+   var elem = document.createElement("img");
+   elem.setAttribute("src", images[i]);
+   elem.setAttribute("width", "100");
+   //elem.setAttribute("width", "1024");
+   //elem.setAttribute("alt", "Flower");
+   elem.setAttribute("class", "ImageForGallery");
+   myDiv.appendChild(elem);
+ }
+}
+
+function subDisplay(name) { 
+   $("#"+name).show();
+}
+
+function hideAll() {
+   $("#AllMyImages").children().hide(); 
+}
+
+//----------------------------
+
+var myUrl = "http://ourmooseinabox.blogspot.com/feeds/posts/default";
+var allBlogData = [];
+var imageCount = 0;
+var rssIndex = 1;
+
+function printEntry(entry,myDiv)
+{
+    var imageArray = entry["imageArray"];
+    for( var j = 0; j < imageArray.length; j++ ){
+      var elem = document.createElement("img");
+      elem.setAttribute("src", imageArray[j]["imageURL"]);
+      elem.setAttribute("width", "100");
+      var imageText = imageArray[j]["imageCaption"] + "\n\nFrom blog post: " + entry["postTitle"];
+      elem.setAttribute("alt", imageText);
+      elem.setAttribute("title", imageText);
+      elem.setAttribute("class", "ImageForGallery");
+      myDiv.appendChild(elem);
+    }
+}
+
+function printBlogData(sortOrder)
+{
+  var myDiv = document.getElementById("AllMyImages");
+  while (myDiv.hasChildNodes()) {
+    myDiv.removeChild(myDiv.lastChild);
+  }
+
+  if(sortOrder == "olderFirst")
+  {
+    for( var i = allBlogData.length -1; i >= 200; i--){
+      printEntry(allBlogData[i],myDiv); 
+    } 
+  }
+  else
+  {
+    for( var i = 0; i < allBlogData.length/4; i++){
+      printEntry(allBlogData[i],myDiv); 
+    } 
+  }
+
+  var debug = "true";
+}
+
+function getLink(entryData)
+{
+  var links = $(entryData).find("link");
+  var linkurl = "";
+  links.each(function() {
+    var linkData = $(this);
+    var linkrel = linkData.attr("rel");
+    if( linkrel == "alternate" )
+    {
+      linkurl = linkData.attr("href");
+      return;
+    }
+  });
+
+  return linkurl;
+}
+
+function getCaption(imageNode)
+{
+  var parentNode = imageNode.parent();
+  if(parentNode[0].nodeName == "A")
+  {
+    return getCaption(parentNode);
+  }
+  else if(parentNode[0].nodeName == "TD")
+  {
+    return getCaption(parentNode);
+  }
+  else if(parentNode[0].nodeName == "TR")
+  {
+    var sibling = parentNode.next();
+    return sibling.text();
+  }
+  
+  return "";
+}
+
+function processHTML(html)
+{
+   var myImageArray = []
+   var imgs = $(html).find("img");
+   if (imgs.length > 0) {
+     imgs.each(function() {
+        var im = $(this);
+        var src = im.attr("src");
+        var caption = getCaption(im);
+        var imageData = [];
+        imageData["imageURL"] = src;
+        imageData["imageCaption"] = caption;
+        myImageArray.push(imageData);
+        imageCount++;
+     });
+   }
+   return myImageArray;
+}
+
+function processURL(rssData) 
+{
+  var entries = $(rssData).find("entry");
+  entries.each(function () { 
+    var entryData = $(this);
+    var entryArray = [];
+    entryArray["postTitle"] = $(entryData).find("title").text();
+    entryArray["postURL"] = getLink(entryData);
+
+    var images = [];
+    var content = $(entryData).find("content").text();
+    var html = $.parseHTML(content);
+    var imgs = $(html).find("img");
+    if (imgs.length > 0) {
+      imgs.each(function() {
+        var im = $(this);
+        var src = im.attr("src");
+        var caption = getCaption(im);
+        var imageData = [];
+        imageData["imageURL"] = src;
+        imageData["imageCaption"] = caption;
+        images.push(imageData);
+        imageCount++;
+      });
+    }
+    entryArray["imageArray"] = images;
+    allBlogData.push(entryArray);
+  });
+
+  if(entries.length > 0)
+  {
+    rssIndex = rssIndex + entries.length;
+    loadImageDataWithIndex();
+  }
+  else
+  {
+    console.log("entries: " +rssIndex);
+  }
+}
+
+function cat(json){ 
+        var label = json.feed.entry;
+        var lst=[];
+        for (i=0; i<label.length; i++){
+          lst[i] = label[i].title.$t ;  
+        }
+}
+
+
+function getImagesFromJSON(json) {
+  var entries = json.feed.entry;
+  if( entries == null )
+  {
+    console.log("entries: " + rssIndex);
+    printBlogData("olderFirst");
+    return;
+  }
+
+  for (i = 0; i < entries.length; i++) 
+  {
+    var entry = entries[i];
+    var myEntryArray = [];
+    myEntryArray["postTitle"] = entry.title.$t;
+    myEntryArray["postURL"] = entry.link.filter(function(a) { return a.rel == 'alternate'})[0].href;
+    var content = entry.content.$t;
+    myEntryArray["imageArray"] = processHTML(content);
+    allBlogData.push(myEntryArray);
+  }
+
+  if (entries.length > 0) 
+  {
+    rssIndex = rssIndex + entries.length;
+    return loadImageDataWithIndexWithJSON();
+  } else {
+    console.log("entries: " + rssIndex);
+    return;
+  }
+}
+
+function loadImageDataWithIndex()
+{
+  var thisUrl = myUrl + "?start-index=" + rssIndex ;
+  $.get(thisUrl, processURL);
+}
+
+function loadImageDataWithIndexWithJSON()
+{
+  var thisUrl = myUrl + "?start-index=" + rssIndex + "&alt=json";
+  $.get(thisUrl, getImagesFromJSON);
+}
+
+function loadImageData()
+{
+  allBlogData = [];
+  imageCount = 0;
+  rssIndex = 1;
+  loadImageDataWithIndex();
+}
+
+function loadImageDataWithJson()
+{
+  allBlogData = [];
+  imageCount = 0;
+  rssIndex = 1;
+  loadImageDataWithIndexWithJSON();
+}
+
+
+
+//$.get("http://ourmooseinabox.blogspot.com/feeds/posts/default?alt=json&max-results=10",cat);
+
+//]]>
+</script>
+
+<style>
+
+</style>
+
+
+
+<a href="javascript:loadImageData()">loadImageData</a>  | 
+
+<a href="javascript:loadImageDataWithJson()">json</a>  | 
+
+<a href="javascript:printBlogData(&quot;olderFirst&quot;)">printOlderFirst</a>  | 
+
+<a href="javascript:printBlogData(&quot;newerFirst&quot;)">printNewerFirst</a>
+
+<div id="AllMyImages">
+</div>
