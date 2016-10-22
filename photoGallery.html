@@ -62,25 +62,19 @@ var rssIndex = 1;
     var debug = "true";
   }
 
-function getCaption(imageNode)
-{
-  var parentNode = imageNode.parent();
-  if(parentNode[0].nodeName == "A")
-  {
-    return getCaption(parentNode);
+  function getCaption(imageNode) {
+    var parentNode = imageNode.parent();
+    if (parentNode[0].nodeName == "A") {
+      return getCaption(parentNode);
+    } else if (parentNode[0].nodeName == "TD") {
+      return getCaption(parentNode);
+    } else if (parentNode[0].nodeName == "TR") {
+      var sibling = parentNode.next();
+      return sibling.text();
+    }
+
+    return "";
   }
-  else if(parentNode[0].nodeName == "TD")
-  {
-    return getCaption(parentNode);
-  }
-  else if(parentNode[0].nodeName == "TR")
-  {
-    var sibling = parentNode.next();
-    return sibling.text();
-  }
-  
-  return "";
-}
 
 function processHTML(html)
 {
