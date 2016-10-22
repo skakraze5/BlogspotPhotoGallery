@@ -94,14 +94,13 @@ var rssIndex = 1;
     return myImageArray;
   }
 
-function cat(json){ 
-        var label = json.feed.entry;
-        var lst=[];
-        for (i=0; i<label.length; i++){
-          lst[i] = label[i].title.$t ;  
-        }
-}
-
+  function cat(json) {
+    var label = json.feed.entry;
+    var lst = [];
+    for (i = 0; i < label.length; i++) {
+      lst[i] = label[i].title.$t;
+    }
+  }
 
 function getImagesFromJSON(json) {
   var entries = json.feed.entry;
