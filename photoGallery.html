@@ -43,28 +43,24 @@ var rssIndex = 1;
     }
   }
 
-function printBlogData(sortOrder)
-{
-  var myDiv = document.getElementById("AllMyImages");
-  while (myDiv.hasChildNodes()) {
-    myDiv.removeChild(myDiv.lastChild);
-  }
+  function printBlogData(sortOrder) {
+    var myDiv = document.getElementById("AllMyImages");
+    while (myDiv.hasChildNodes()) {
+      myDiv.removeChild(myDiv.lastChild);
+    }
 
-  if(sortOrder == "olderFirst")
-  {
-    for( var i = allBlogData.length -1; i >= 200; i--){
-      printEntry(allBlogData[i],myDiv); 
-    } 
-  }
-  else
-  {
-    for( var i = 0; i < allBlogData.length/4; i++){
-      printEntry(allBlogData[i],myDiv); 
-    } 
-  }
+    if (sortOrder == "olderFirst") {
+      for (var i = allBlogData.length - 1; i >= 200; i--) {
+        printEntry(allBlogData[i], myDiv);
+      }
+    } else {
+      for (var i = 0; i < allBlogData.length / 4; i++) {
+        printEntry(allBlogData[i], myDiv);
+      }
+    }
 
-  var debug = "true";
-}
+    var debug = "true";
+  }
 
 function getCaption(imageNode)
 {
