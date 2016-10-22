@@ -29,10 +29,9 @@ var allBlogData = [];
 var imageCount = 0;
 var rssIndex = 1;
 
-function printEntry(entry,myDiv)
-{
+  function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
-    for( var j = 0; j < imageArray.length; j++ ){
+    for (var j = 0; j < imageArray.length; j++) {
       var elem = document.createElement("img");
       elem.setAttribute("src", imageArray[j]["imageURL"]);
       elem.setAttribute("width", "100");
@@ -42,7 +41,7 @@ function printEntry(entry,myDiv)
       elem.setAttribute("class", "ImageForGallery");
       myDiv.appendChild(elem);
     }
-}
+  }
 
 function printBlogData(sortOrder)
 {
