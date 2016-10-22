@@ -76,12 +76,11 @@ var rssIndex = 1;
     return "";
   }
 
-function processHTML(html)
-{
-   var myImageArray = []
-   var imgs = $(html).find("img");
-   if (imgs.length > 0) {
-     imgs.each(function() {
+  function processHTML(html) {
+    var myImageArray = []
+    var imgs = $(html).find("img");
+    if (imgs.length > 0) {
+      imgs.each(function() {
         var im = $(this);
         var src = im.attr("src");
         var caption = getCaption(im);
@@ -90,10 +89,10 @@ function processHTML(html)
         imageData["imageCaption"] = caption;
         myImageArray.push(imageData);
         imageCount++;
-     });
-   }
-   return myImageArray;
-}
+      });
+    }
+    return myImageArray;
+  }
 
 function cat(json){ 
         var label = json.feed.entry;
