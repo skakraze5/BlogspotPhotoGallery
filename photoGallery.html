@@ -76,7 +76,7 @@
     return "";
   }
 
-  function processHTML(html) {
+  function findAllImageData(html) {
     var myImageArray = []
     var imgs = $(html).find("img");
     if (imgs.length > 0) {
@@ -102,7 +102,7 @@
     }
   }
 
-  function getImagesFromJSON(json) {
+  function parseJSON(json) {
     var entries = json.feed.entry;
     if (entries == null) {
       console.log("entries: " + g_rssIndex);
@@ -116,8 +116,8 @@
       myEntryArray["postURL"] = entry.link.filter(function(a) {
         return a.rel == 'alternate'
       })[0].href;
-      var content = entry.content.$t;
-      myEntryArray["imageArray"] = processHTML(content);
+      var htmlContent = entry.content.$t;
+      myEntryArray["imageArray"] = findAllImageData(htmlContent);
       g_allBlogData.push(myEntryArray);
     }
     if (entries.length > 0) {
@@ -131,7 +131,7 @@
 
   function loadImageDataWithIndexWithJSON() {
     var thisUrl = g_baseURL + "?start-index=" + g_rssIndex + "&alt=json";
-    $.get(thisUrl, getImagesFromJSON);
+    $.get(thisUrl, parseJSON);
   }
 
   function loadImageDataWithJson() {
