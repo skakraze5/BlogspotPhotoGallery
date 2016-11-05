@@ -34,7 +34,7 @@
   function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
     for (var j = 0; j < imageArray.length; j++) {
-      var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a href=\"" + entry["postURL"]+ "\">"+ entry["postTitle"] + "</a>";
+      var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a target=\"_blank\" href=\"" + entry["postURL"]+ "\">"+ entry["postTitle"] + "</a>";
       
       
       var linkElem = document.createElement("a");
