@@ -34,14 +34,16 @@
   function printEntry(entry, myDiv) {
     var imageArray = entry["imageArray"];
     for (var j = 0; j < imageArray.length; j++) {
-      var imageText = imageArray[j]["imageCaption"] + "\n\nFrom blog post: " + entry["postTitle"];
+      var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a href=\"" + entry["postURL"]+ "\">"+ entry["postTitle"] + "</a>";
+      
       
       var linkElem = document.createElement("a");
       linkElem.setAttribute("href",imageArray[j]["imageURL"]);
       linkElem.setAttribute("imageanchor",1);
       linkElem.setAttribute("class", "linksForGallery");
-      linkElem.setAttribute("title", imageText);
+      linkElem.setAttribute("title", linkText);
       
+      var imageText = imageArray[j]["imageCaption"];
       var elem = document.createElement("img");
       elem.setAttribute("src", imageArray[j]["imageURL"]);
       elem.setAttribute("width", "100");
