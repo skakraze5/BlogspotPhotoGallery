@@ -37,6 +37,7 @@
       var linkElem = document.createElement("a");
       linkElem.setAttribute("href",imageArray[j]["imageURL"]);
       linkElem.setAttribute("imageanchor",1);
+      linkElem.setAttribute("class", "linkForGallery");
       
       var elem = document.createElement("img");
       elem.setAttribute("src", imageArray[j]["imageURL"]);
@@ -44,7 +45,7 @@
       var imageText = imageArray[j]["imageCaption"] + "\n\nFrom blog post: " + entry["postTitle"];
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
-      elem.setAttribute("class", "gallery");
+      elem.setAttribute("class", "imageForGallery");
       linkElem.appendChild(elem);
       myDiv.appendChild(linkElem);
     }
@@ -67,7 +68,7 @@
     }
 
     var debug = "true";
-    jQuery('a.gallery').colorbox();
+    jQuery('a.linkForGallery').colorbox();
   }
 
   function getCaption(imageNode) {
@@ -158,7 +159,6 @@
 
 </style>
 
-<a href="javascript:loadImageData()">loadImageData</a>  | 
 <a href="javascript:loadImageDataWithJson()">json</a>  | 
 <a href="javascript:printBlogData(&quot;olderFirst&quot;)">printOlderFirst</a>  | 
 <a href="javascript:printBlogData(&quot;newerFirst&quot;)">printNewerFirst</a>
