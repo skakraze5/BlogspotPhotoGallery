@@ -1,4 +1,6 @@
+<link rel="stylesheet" href="http://www.jacklmoore.com/colorbox/example1/colorbox.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
 <script type='text/javascript'>
   //<![CDATA[
 
@@ -42,7 +44,7 @@
       var imageText = imageArray[j]["imageCaption"] + "\n\nFrom blog post: " + entry["postTitle"];
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
-      elem.setAttribute("class", "ImageForGallery");
+      elem.setAttribute("class", "gallery");
       linkElem.appendChild(elem);
       myDiv.appendChild(linkElem);
     }
@@ -65,6 +67,7 @@
     }
 
     var debug = "true";
+    jQuery('a.gallery').colorbox();
   }
 
   function getCaption(imageNode) {
