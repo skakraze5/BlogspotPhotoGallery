@@ -53,14 +53,14 @@
       
       
       var linkElem = document.createElement("a");
-      linkElem.setAttribute("href",imgURLWithSize(imageArray[j]["imageURL"],400));
+      linkElem.setAttribute("href",imgURLWithSize(imageArray[j]["imageURL"],2000));
       linkElem.setAttribute("imageanchor",1);
       linkElem.setAttribute("class", "linksForGallery");
       linkElem.setAttribute("title", linkText);
       
       var imageText = imageArray[j]["imageCaption"];
       var elem = document.createElement("img");
-      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],50));
+      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],100));
       elem.setAttribute("width", "100");
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
@@ -87,7 +87,7 @@
     }
 
     var debug = "true";
-    $(".linksForGallery").lightGallery();
+    $("#AllMyImages").lightGallery();
   }
 
   function getCaption(imageNode) {
