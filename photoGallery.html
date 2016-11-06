@@ -32,7 +32,7 @@
   var g_rssIndex = 1;
   
   //https://2.bp.blogspot.com/-h7XQTGAnOZU/WB3oWe9w5CI/AAAAAAAAF7c/kMq0yLSV2XUHoIuq4_CMxUoG7FI3l02RQCKgB/s320/IMG_20161023_173649.jpg
-  function imgURL(orig, size)
+  function imgURLWithSize(orig, size)
   {
     if(orig.search("2.bp.blogspot.com") == -1)
     {
@@ -53,14 +53,14 @@
       
       
       var linkElem = document.createElement("a");
-      linkElem.setAttribute("href",imageArray[j]["imageURL"]);
+      linkElem.setAttribute("href",imgURLWithSize(imageArray[j]["imageURL"],400));
       linkElem.setAttribute("imageanchor",1);
       linkElem.setAttribute("class", "linksForGallery");
       linkElem.setAttribute("title", linkText);
       
       var imageText = imageArray[j]["imageCaption"];
       var elem = document.createElement("img");
-      elem.setAttribute("src", imageArray[j]["imageURL"]);
+      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],50));
       elem.setAttribute("width", "100");
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
