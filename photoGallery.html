@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="http://www.jacklmoore.com/colorbox/example1/colorbox.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.5/css/lightgallery.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.5/js/lightgallery.min.js"></script>
 <script type='text/javascript'>
   //<![CDATA[
 
@@ -66,13 +66,13 @@
         printEntry(g_allBlogData[i], myDiv);
       }
     } else {
-      for (var i = 0; i < g_allBlogData.length / 4; i++) {
+      for (var i = 0; i < g_allBlogData.length / 10; i++) {
         printEntry(g_allBlogData[i], myDiv);
       }
     }
 
     var debug = "true";
-    $(".linksForGallery").colorbox({rel:'linkForGallery', transition:"none", width:"75%", height:"75%"});
+    $(".linksForGallery").lightGallery();
   }
 
   function getCaption(imageNode) {
@@ -119,7 +119,7 @@
     var entries = json.feed.entry;
     if (entries == null) {
       console.log("entries: " + g_rssIndex);
-      printBlogData("olderFirst");
+      printBlogData("newerFirst");
       return;
     }
     for (i = 0; i < entries.length; i++) {
