@@ -77,11 +77,11 @@
     }
 
     if (sortOrder == "olderFirst") {
-      for (var i = g_allBlogData.length - 1; i >= 200; i--) {
+      for (var i = g_allBlogData.length - 1; i >= g_allBlogData.length-3; i--) {
         printEntry(g_allBlogData[i], myDiv);
       }
     } else {
-      for (var i = 0; i < g_allBlogData.length / 10; i++) {
+      for (var i = 0; i < 1; i++) {
         printEntry(g_allBlogData[i], myDiv);
       }
     }
