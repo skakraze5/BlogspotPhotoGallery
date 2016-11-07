@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.5/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.2.21/js/lightgallery-all.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
 <script type='text/javascript'>
   //<![CDATA[
 
@@ -48,16 +50,19 @@
   
   function printPaging(pageNumber)
   {
-    var pageHtml = "";
-    for (var j = 1; j <= pageNumber; j++) {
-      pageHtml = pageHtml + "<a>" + j + "</a>";
-      if(j < pageNumber)
-      {
-        pageHtml = pageHtml + " | ";
-      }
-    }
+    $('.sync-pagination').twbsPagination({
+        totalPages: pageNumber,
+        visiblePages: 7,
+        next: "&rsaquo;",
+        prev: "&lsaquo;",
+        last: "&raquo;",
+        first: "&laquo;",
+        onPageClick: function (event, pageNum) {
+            $("#AllMyImages").children().hide();
+            $("#page"+pageNum).show();
+        }
+    });
     
-    document.getElementById("PageList").innerHTML = pageHtml;
   }
 
   function printImages(imageArray,myDiv) {
@@ -125,6 +130,7 @@
   }
 
   function printBlogData(sortOrder) {
+    $("#loaderDiv").hide();
     var myDiv = document.getElementById("AllMyImages");
     while (myDiv.hasChildNodes()) {
       myDiv.removeChild(myDiv.lastChild);
@@ -229,6 +235,10 @@
     g_rssIndex = 1;
     loadImageDataWithIndexWithJSON();
   }
+  
+  $( document ).ready(function() {
+    loadImageDataWithJson();
+  });
 
   //$.get("http://ourmooseinabox.blogspot.com/feeds/posts/default?alt=json&max-results=10",cat);
 
@@ -247,7 +257,6 @@
     margin: 5px;
     box-sizing: border-box;
     padding: 0px;
-
 }
 
 .linksForGallery img {
@@ -258,13 +267,63 @@
     height: 100%;
     object-fit: cover;
 }
+
+.page-wrapper {
+ width:auto
+ margin: 0 auto;
+    text-align:center;
+}
+
+.sync-pagination {
+ display:inline-block;
+ padding:5px 0;
+}
+
+.sync-pagination li {
+ display:inline;
+ list-style-type:none;
+ margin:2;
+}
+
+.loader {
+  display:inline-block;
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 </style>
 
-<a href="javascript:loadImageDataWithJson()">json</a>  | 
+<!--
+<a href="javascript:loadImageDataWithJson()">load</a>  | 
 <a href="javascript:printBlogData(&quot;olderFirst&quot;)">printOlderFirst</a>  | 
 <a href="javascript:printBlogData(&quot;newerFirst&quot;)">printNewerFirst</a>
+-->
 
-<div id="PageList">
+<div class="page-wrapper" id="loaderDiv">
+  <div class="loader"></div>
+</div>
+
+<div class="page-wrapper">
+  <ul class="sync-pagination pagination-sm"></ul>
 </div>
 <div id="AllMyImages">
+</div>
+<br />
+<div class="page-wrapper">
+  <ul class="sync-pagination pagination-sm"></ul>
 </div>
