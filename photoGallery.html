@@ -77,11 +77,11 @@
     }
 
     if (sortOrder == "olderFirst") {
-      for (var i = g_allBlogData.length - 1; i >= g_allBlogData.length-3; i--) {
+      for (var i = g_allBlogData.length - 1; i >= g_allBlogData.length-10; i--) {
         printEntry(g_allBlogData[i], myDiv);
       }
     } else {
-      for (var i = 0; i < 1; i++) {
+      for (var i = 0; i < 10; i++) {
         printEntry(g_allBlogData[i], myDiv);
       }
     }
@@ -91,7 +91,7 @@
       selector: '.linksForGallery',
       thumbnail:true,
       showThumbByDefault: false,
-      hideBarsDelay: 3000
+      hideBarsDelay: 1500
     });
     $lg.on('onSlideClick.lg', toggleCaption);
   }
