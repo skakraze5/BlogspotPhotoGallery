@@ -93,11 +93,12 @@
       showThumbByDefault: false,
       hideBarsDelay: 1500
     });
-    $lg.on('onSlideClick.lg', toggleCaption);
+    $lg.on('onAfterOpen.lg',function(event){
+      $('.lg-toolbar').append('<a class=\"lg-icon\" href=\"javascript:toggleCaption()\">CC</a>');
+    });
   }
 
-  function toggleCaption(e) {
-    $('.lg-outer').toggleClass('lg-hide-items');
+  function toggleCaption() {
     var curVal = $('.lg-sub-html').css('visibility');
     $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
   }
