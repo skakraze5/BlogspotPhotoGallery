@@ -89,12 +89,13 @@
     $lg = $("#AllMyImages");
     $lg.lightGallery({
       thumbnail:true,
-      showThumbByDefault: false
+      showThumbByDefault: false,
+      hideBarsDelay: 3000
     });
-    $lg.on('onSlideClick.lg', doToggle);
+    $lg.on('onSlideClick.lg', toggleCaption);
   }
 
-  function doToggle(e) {
+  function toggleCaption(e) {
     $('.lg-outer').toggleClass('lg-hide-items');
     var curVal = $('.lg-sub-html').css('visibility');
     $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
