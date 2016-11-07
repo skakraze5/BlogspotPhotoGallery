@@ -60,8 +60,8 @@
       
       var imageText = imageArray[j]["imageCaption"];
       var elem = document.createElement("img");
-      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],100));
-      elem.setAttribute("width", "100");
+      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],150));
+      elem.setAttribute("width", "120");
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
       elem.setAttribute("class", "imagesForGallery");
@@ -188,7 +188,26 @@
 </script>
 
 <style>
+.linksForGallery {
+    border: 2px solid gray;
+    border-radius: 4px;
+    float: left;
+    height: 100px;
+    width: 120px;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 5px;
+    box-sizing: border-box;
+    padding: 2px 4px 4px 2px;
 
+}
+
+.linksForGallery img {
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 </style>
 
 <a href="javascript:loadImageDataWithJson()">json</a>  | 
