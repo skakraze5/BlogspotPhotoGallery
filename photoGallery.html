@@ -54,7 +54,7 @@
       
       var linkElem = document.createElement("a");
       linkElem.setAttribute("href",imgURLWithSize(imageArray[j]["imageURL"],2000));
-      linkElem.setAttribute("imageanchor",1);
+      linkElem.setAttribute("data-download-url",imgURLWithSize(imageArray[j]["imageURL"],99999));
       linkElem.setAttribute("class", "linksForGallery");
       linkElem.setAttribute("title", linkText);
       
