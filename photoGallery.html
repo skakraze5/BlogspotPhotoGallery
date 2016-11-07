@@ -52,16 +52,15 @@
       var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a target=\"_blank\" href=\"" + entry["postURL"]+ "\">"+ entry["postTitle"] + "</a>";
       
       
-      var linkElem = document.createElement("a");
-      linkElem.setAttribute("href",imgURLWithSize(imageArray[j]["imageURL"],2000));
+      var linkElem = document.createElement("div");
+      linkElem.setAttribute("data-src",imgURLWithSize(imageArray[j]["imageURL"],2000));
       linkElem.setAttribute("data-download-url",imgURLWithSize(imageArray[j]["imageURL"],10000));
       linkElem.setAttribute("class", "linksForGallery");
       linkElem.setAttribute("title", linkText);
       
       var imageText = imageArray[j]["imageCaption"];
       var elem = document.createElement("img");
-      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],150));
-      elem.setAttribute("width", "120");
+      elem.setAttribute("src", imgURLWithSize(imageArray[j]["imageURL"],200));
       elem.setAttribute("alt", imageText);
       elem.setAttribute("title", imageText);
       elem.setAttribute("class", "imagesForGallery");
@@ -193,17 +192,19 @@
     border-radius: 4px;
     float: left;
     height: 100px;
-    width: 120px;
+    width: 130px;
     overflow: hidden;
     cursor: pointer;
     margin: 5px;
     box-sizing: border-box;
-    padding: 2px 4px 4px 2px;
+    padding: 0px;
 
 }
 
 .linksForGallery img {
-    padding: 0px 0px 0px 0px;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
     width: 100%;
     height: 100%;
     object-fit: cover;
