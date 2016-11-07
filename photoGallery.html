@@ -116,7 +116,7 @@
     return "";
   }
 
-  function findAllImageData(html) {
+  function findAllImageData(html,entryData) {
     var myImageArray = []
     var imgs = $(html).find("img");
     if (imgs.length > 0) {
@@ -127,6 +127,8 @@
         var imageData = [];
         imageData["imageURL"] = src;
         imageData["imageCaption"] = caption;
+        imageData["postTitle"] = entryData["postTitle"];
+        imageData["postURL"] = entryData["postURL"];
         myImageArray.push(imageData);
         g_imageCount++;
       });
@@ -157,7 +159,7 @@
         return a.rel == 'alternate'
       })[0].href;
       var htmlContent = entry.content.$t;
-      myEntryArray["imageArray"] = findAllImageData(htmlContent);
+      myEntryArray["imageArray"] = findAllImageData(htmlContent,myEntryArray);
       g_allBlogData.push(myEntryArray);
     }
     if (entries.length > 0) {
