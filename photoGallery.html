@@ -46,10 +46,15 @@
     return orig
   }
 
-  function printEntry(entry, myDiv) {
-    var imageArray = entry["imageArray"];
+  function printImages(imageArray,myDiv) {
+    var curPage = 1;
+    var pageElem = document.createElement("div");
+    pageElem.setAttribute("class", "pagesForGallery");
+    pageElem.setAttribute("id", "page"+curPage);
+    pageElem.setAttribute("style","display: block;");
+    
     for (var j = 0; j < imageArray.length; j++) {
-      var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a target=\"_blank\" href=\"" + entry["postURL"]+ "\">"+ entry["postTitle"] + "</a>";
+      var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a target=\"_blank\" href=\"" + imageArray[j]["postURL"]+ "\">"+ imageArray[j]["postTitle"] + "</a>";
       
       
       var linkElem = document.createElement("div");
@@ -65,8 +70,43 @@
       elem.setAttribute("title", imageText);
       elem.setAttribute("class", "imagesForGallery");
       linkElem.appendChild(elem);
-      myDiv.appendChild(linkElem);
+      pageElem.appendChild(linkElem);
+      
+      if( ((j+1) % (4*30)) == 0 || (j+1) == imageArray.length)
+      {
+        myDiv.appendChild(pageElem);
+        if( (j+1) < imageArray.length)
+        {
+          curPage++;
+          pageElem = document.createElement("div");
+          pageElem.setAttribute("class", "pagesForGallery");
+          pageElem.setAttribute("id", "page"+curPage);
+          pageElem.setAttribute("style","display: none;");
+        }
+      }
     }
+  }
+  
+  function addImageDataToArray(entry, allImages) {
+    var imageArray = entry["imageArray"];
+    for (var j = 0; j < imageArray.length; j++) {
+      allImages.push(imageArray[j]);
+    }
+  }
+  
+  function getSortedImageData(sortOrder)
+  {
+    var sortedImageData = [];
+    if (sortOrder == "olderFirst") {
+      for (var i = g_allBlogData.length - 1; i >= 0; i--) {
+        addImageDataToArray(g_allBlogData[i], sortedImageData);
+      }
+    } else {
+      for (var i = 0; i < g_allBlogData.length; i++) {
+        addImageDataToArray(g_allBlogData[i], sortedImageData);
+      }
+    }
+    return sortedImageData;
   }
 
   function printBlogData(sortOrder) {
@@ -74,16 +114,8 @@
     while (myDiv.hasChildNodes()) {
       myDiv.removeChild(myDiv.lastChild);
     }
-
-    if (sortOrder == "olderFirst") {
-      for (var i = g_allBlogData.length - 1; i >= g_allBlogData.length-9; i--) {
-        printEntry(g_allBlogData[i], myDiv);
-      }
-    } else {
-      for (var i = 0; i < 10; i++) {
-        printEntry(g_allBlogData[i], myDiv);
-      }
-    }
+    var sortedImageData = getSortedImageData(sortOrder);
+    printImages(sortedImageData);
 
     $lg = $("#AllMyImages");
     $lg.lightGallery({
