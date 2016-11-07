@@ -53,10 +53,10 @@
     $('.sync-pagination').twbsPagination({
         totalPages: pageNumber,
         visiblePages: 7,
-        next: "&rsaquo;",
-        prev: "&lsaquo;",
-        last: "&raquo;",
-        first: "&laquo;",
+        next: "<span title=\"Next\">&rsaquo;</span>",
+        prev: "<span title=\"Previous\">&lsaquo;</span>",
+        last: "<span title=\"Last\">&raquo;</span>",
+        first: "<span title=\"First\">&laquo;</span>",
         onPageClick: function (event, pageNum) {
             $("#AllMyImages").children().hide();
             $("#page"+pageNum).show();
@@ -70,7 +70,7 @@
     var pageElem = document.createElement("div");
     pageElem.setAttribute("class", "pagesForGallery");
     pageElem.setAttribute("id", "page"+curPage);
-    pageElem.setAttribute("style","display: block;");
+    pageElem.setAttribute("style","display: none;");
     
     for (var j = 0; j < imageArray.length; j++) {
       var linkText = imageArray[j]["imageCaption"] + "<br />From blog post: <a target=\"_blank\" href=\"" + imageArray[j]["postURL"]+ "\">"+ imageArray[j]["postTitle"] + "</a>";
@@ -91,7 +91,8 @@
       linkElem.appendChild(elem);
       pageElem.appendChild(linkElem);
       
-      if( ((j+1) % (4*30)) == 0 || (j+1) == imageArray.length)
+      var numOfRows = 10;
+      if( ((j+1) % (4*numOfRows)) == 0 || (j+1) == imageArray.length)
       {
         myDiv.appendChild(pageElem);
         if( (j+1) < imageArray.length)
@@ -304,6 +305,10 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+body{
+    background: #003e5d none repeat scroll top left;
 }
 
 </style>
