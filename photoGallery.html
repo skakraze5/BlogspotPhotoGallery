@@ -86,8 +86,18 @@
       }
     }
 
-    var debug = "true";
-    $("#AllMyImages").lightGallery();
+    $lg = $("#AllMyImages");
+    $lg.lightGallery({
+      thumbnail:true,
+      showThumbByDefault: false
+    });
+    $lg.on('onSlideClick.lg', doToggle);
+  }
+
+  function doToggle(e) {
+    $('.lg-outer').toggleClass('lg-hide-items');
+    var curVal = $('.lg-sub-html').css('visibility');
+    $('.lg-sub-html').css('visibility', curVal == 'hidden' ? 'visible' : 'hidden');
   }
 
   function getCaption(imageNode) {
