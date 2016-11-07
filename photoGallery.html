@@ -45,6 +45,18 @@
     }
     return orig
   }
+  
+  function printPaging(pageNumber)
+  {
+    var pageHtml = "";
+    for (var j = 1; j <= pageNumber; j++) {
+      pageHtml = pageHtml + "<a>" + j + "</a>";
+      if(j < pageNumber)
+        pageHtml = pageHtml " | ";
+    }
+    
+    document.getElementById("PageList").innerHTML = pageHtml;
+  }
 
   function printImages(imageArray,myDiv) {
     var curPage = 1;
@@ -85,6 +97,7 @@
         }
       }
     }
+    printPaging(curPage);
   }
   
   function addImageDataToArray(entry, allImages) {
@@ -249,5 +262,7 @@
 <a href="javascript:printBlogData(&quot;olderFirst&quot;)">printOlderFirst</a>  | 
 <a href="javascript:printBlogData(&quot;newerFirst&quot;)">printNewerFirst</a>
 
+<div id="PageList">
+</div>
 <div id="AllMyImages">
 </div>
